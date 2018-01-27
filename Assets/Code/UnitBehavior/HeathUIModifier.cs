@@ -17,11 +17,13 @@ public class HeathUIModifier : MonoBehaviour
     private void OnEnable()
     {
         ActionManager.OnStartLevel += OnLevelStarted;
+        ActionManager.OnLevelFinished += OnLevelFinished;
     }
 
     private void OnDisable()
     {
         ActionManager.OnStartLevel -= OnLevelStarted;
+        ActionManager.OnLevelFinished -= OnLevelFinished;
     }
 
     // Use this for initialization
@@ -55,6 +57,11 @@ public class HeathUIModifier : MonoBehaviour
         currentSlider.value = isPlayer ? level.playerHeath : level.enemyHealth;
         currentRate = isPlayer ? level.initalEnemyDamage : level.initalPlayerDamage;
         callUpdateLoop = true;
+    }
+
+    void OnLevelFinished(END_RESULT result)
+    {
+        callUpdateLoop = false;
     }
 
 
