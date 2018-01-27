@@ -17,7 +17,17 @@ public class LevelManager : MonoBehaviour
         {
             if (ActionManager.OnStartLevel != null)
                 ActionManager.OnStartLevel(levels[0]);
+
+            //Invoke("TriggerFirstWord", 5f);
         }
+
+    }
+
+    void TriggerFirstWord()
+    {
+        if (ActionManager.OnSpawnWord != null)
+            ActionManager.OnSpawnWord();
+
 
     }
 
@@ -38,4 +48,7 @@ public class LevelData
     public float scrollTime;
     public float scrollDelayTime;
     public float perWordMultiplier;
+
+    public float maxMessageDelay;
+    public float minMessageDelay;
 }

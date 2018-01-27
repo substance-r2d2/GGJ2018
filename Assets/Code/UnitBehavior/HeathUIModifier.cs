@@ -18,12 +18,14 @@ public class HeathUIModifier : MonoBehaviour
     {
         ActionManager.OnStartLevel += OnLevelStarted;
         ActionManager.OnLevelFinished += OnLevelFinished;
+        ActionManager.OnCardDeployed += OnCardUsed;
     }
 
     private void OnDisable()
     {
         ActionManager.OnStartLevel -= OnLevelStarted;
         ActionManager.OnLevelFinished -= OnLevelFinished;
+        ActionManager.OnCardDeployed -= OnCardUsed;
     }
 
     // Use this for initialization
@@ -62,6 +64,33 @@ public class HeathUIModifier : MonoBehaviour
     void OnLevelFinished(END_RESULT result)
     {
         callUpdateLoop = false;
+    }
+
+    void OnCardUsed(CardData cardData,bool playerOwned)
+    {
+        switch(cardData.cardType)
+        {
+            case CARD_TYPE.ATTACK:
+                if(!isPlayer && playerOwned)
+                {
+                    float damage = (cardData.modifier * currentSlider.value) / 100f;
+                    currentSlider.value -= damage; 
+                }
+                break;
+
+            case CARD_TYPE.HP:
+                if(isPlayer && playerOwned && cardData.modifier > 0f)
+                {
+                    float increased = (cardData.modifier * currentSlider.value) / 100f;
+                    currentSlider.value += increased;
+                }
+                if(!isPlayer && playerOwned && cardData.modifier < 0f)
+                {
+                    float decreased = (cardData.modifier * currentSlider.value) / 100f;
+                    currentSlider.value += decreased;
+                }
+                break;
+        }
     }
 
 
