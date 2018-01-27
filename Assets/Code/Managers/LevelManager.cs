@@ -29,9 +29,13 @@ public class LevelData
 {
     public string levelName;
 
-    public int enemyHealth;
-    public int playerHeath;
+    public float enemyHealth;
+    public float playerHeath;
 
-    public int initalEnemyDamage;
-    public int initalPlayerDamage;
+    public float initalEnemyDamage;
+    public float initalPlayerDamage;
+
+    public float scrollTime;
+    public float scrollDelayTime;
+    public float perWordMultiplier;
 }
