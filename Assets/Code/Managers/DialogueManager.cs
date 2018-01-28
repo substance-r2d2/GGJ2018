@@ -39,6 +39,7 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0; i < dialogueData.Count; i++)
         {
             characterImage.sprite = Resources.Load<Sprite>("CharacterImages/" + dialogueData[i].characterAssetName);
+            characterImage.SetNativeSize();
             DialogueParent.DOScale(Vector3.one, animTime);
             yield return new WaitForSeconds(animTime);
             for (int j = 0; j < dialogueData[i].dialogues.Count; j++)
