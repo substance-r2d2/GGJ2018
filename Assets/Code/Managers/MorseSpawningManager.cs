@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class MorseSpawningManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class MorseSpawningManager : MonoBehaviour
     public Transform startpoint;
 
     public Transform endPoint;
+
+    Tween light;
 
     LevelData currentLevel;
     List<string> morse = new List<string>();
@@ -60,14 +63,22 @@ public class MorseSpawningManager : MonoBehaviour
             morse.Add(MorseToCharacterMapper.charToMorse[secretWord[i]]);
         }
 
-        ButtonObj.transform.DOPunchScale(Vector3.one, 1f);
+        light = ButtonObj.GetComponent<Image>().DOColor(Color.red, 0.75f).SetLoops(100, LoopType.Yoyo);
         SoundManager.Instance.PlayMessageReceived();
     }
 
     public void OnMessageClicked()
     {
-        if(morse.Count > 0 && !isCodeRunning)
+        if (morse.Count > 0 && !isCodeRunning)
+        {
+            if(light != null)
+            {
+                light.Kill();
+                ButtonObj.GetComponent<Image>().color = Color.white;
+                light = null;
+            }
             StartCoroutine(RunTheMorseCode());
+        }
     }
 
     IEnumerator RunTheMorseCode()

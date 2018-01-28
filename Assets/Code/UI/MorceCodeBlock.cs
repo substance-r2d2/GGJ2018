@@ -69,9 +69,9 @@ public class MorceCodeBlock : MonoBehaviour
         {
             if (movementTween != null)
             {
-                if (movementTween.ElapsedPercentage() > 0.65f)
+                if (movementTween.ElapsedPercentage() > 0.8f)
                 {
-                   // transform.DOScale(Vector3.zero, scaleTime).SetEase(scaleEaseType);
+                    transform.DOScale(Vector3.zero, scaleTime/2f).SetEase(scaleEaseType);
                     movementTween = null;
                 }
             }
@@ -105,7 +105,6 @@ public class MorceCodeBlock : MonoBehaviour
             if (currentData.inputType == currentInput)
             {
                 //Debug.LogError("HIT!");
-                transform.DOShakeScale(1f);
 
                 if (ActionManager.OnScore != null)
                     ActionManager.OnScore();

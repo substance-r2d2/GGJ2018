@@ -11,16 +11,21 @@ public class PopulateCardsData : MonoBehaviour
     [SerializeField]
     List<PlayerCard> playerCardSlots;
 
+    [SerializeField]
+    GameObject inventoryButton;
+
     bool isOpen;
 
     private void OnEnable()
     {
         ActionManager.OnCloseInventory += OnInventoryClicked;
+        ActionManager.OnCardGained += OnCardGained;
     }
 
     private void OnDisable()
     {
         ActionManager.OnCloseInventory -= OnInventoryClicked;
+        ActionManager.OnCardGained -= OnCardGained;
     }
 
     private void Awake()
@@ -55,6 +60,11 @@ public class PopulateCardsData : MonoBehaviour
     void ToggleOpenStatus()
     {
         isOpen = !isOpen;
+    }
+
+    public void OnCardGained(CardData data, bool isPlayer)
+    {
+        inventoryButton.transform.DOShakeRotation(0.5f);
     }
 
 }

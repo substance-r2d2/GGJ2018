@@ -19,6 +19,9 @@ public class DialogueManager : MonoBehaviour
     Text textBox;
 
     [SerializeField]
+    Image characterImage;
+
+    [SerializeField]
     float animTime;
 
     bool waitForNextDialogue;
@@ -35,6 +38,7 @@ public class DialogueManager : MonoBehaviour
 
         for (int i = 0; i < dialogueData.Count; i++)
         {
+            characterImage.sprite = Resources.Load<Sprite>("CharacterImages/" + dialogueData[i].characterAssetName);
             DialogueParent.DOScale(Vector3.one, animTime);
             yield return new WaitForSeconds(animTime);
             for (int j = 0; j < dialogueData[i].dialogues.Count; j++)

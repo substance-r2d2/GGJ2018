@@ -68,7 +68,7 @@ public class ScoreManager : MonoBehaviour
             modifier = 0.2f;
         }
 
-        Debug.LogError("score " + score + " " + modifier);
+        //Debug.LogError("score " + score + " " + modifier);
         if (ActionManager.UpdateModifier != null)
             ActionManager.UpdateModifier(modifier);
 
