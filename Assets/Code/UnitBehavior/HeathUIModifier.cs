@@ -11,21 +11,32 @@ public class HeathUIModifier : MonoBehaviour
     Slider currentSlider;
 
     float currentRate;
+    float modifier;
 
     bool callUpdateLoop;
 
     private void OnEnable()
     {
-        ActionManager.OnStartLevel += OnLevelStarted;
+        ActionManager.OnStartFight += OnLevelStarted;
         ActionManager.OnLevelFinished += OnLevelFinished;
         ActionManager.OnCardDeployed += OnCardUsed;
+        if (!isPlayer)
+        {
+            ActionManager.OnSpawnWord += ResetModifer;
+            ActionManager.UpdateModifier += UpdateModifier;
+        }
     }
 
     private void OnDisable()
     {
-        ActionManager.OnStartLevel -= OnLevelStarted;
+        ActionManager.OnStartFight -= OnLevelStarted;
         ActionManager.OnLevelFinished -= OnLevelFinished;
         ActionManager.OnCardDeployed -= OnCardUsed;
+        if (!isPlayer)
+        {
+            ActionManager.OnSpawnWord -= ResetModifer;
+            ActionManager.UpdateModifier -= UpdateModifier;
+        }
     }
 
     // Use this for initialization
@@ -39,13 +50,16 @@ public class HeathUIModifier : MonoBehaviour
     {
         if(callUpdateLoop)
         {
-            if(currentSlider.value > 0)
-                currentSlider.value = currentSlider.value - (currentRate * Time.deltaTime);
+            if (currentSlider.value > 0)
+            {
+                //Debug.LogError(((currentRate + (currentRate * modifier)) * Time.deltaTime) + " " + (modifier));
+                currentSlider.value = currentSlider.value - ((currentRate + (currentRate * modifier)) * Time.deltaTime);
+            }
             else
             {
                 END_RESULT result = isPlayer ? END_RESULT.LOSE : END_RESULT.WIN;
                 if (ActionManager.OnLevelFinished != null)
-                    ActionManager.OnLevelFinished(END_RESULT.LOSE);
+                    ActionManager.OnLevelFinished(result);
 
                 callUpdateLoop = false;
             }
@@ -91,6 +105,16 @@ public class HeathUIModifier : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    void ResetModifer(string str)
+    {
+        modifier = 0f;
+    }
+
+    void UpdateModifier(float newModifier)
+    {
+        modifier = newModifier;
     }
 
 

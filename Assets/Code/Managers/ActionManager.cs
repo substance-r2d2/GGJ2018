@@ -6,8 +6,10 @@ using System;
 public class ActionManager
 {
     public static Action<LevelData> OnStartLevel;
+    public static Action<LevelData> OnStartFight;
 
-    public static Action OnSpawnWord;
+    public static Action<string> OnSpawnWord;
+    public static Action OnSpawnWordFinished;
 
     public static Action<END_RESULT> OnLevelFinished;
 
@@ -18,4 +20,6 @@ public class ActionManager
 
     public static Action OnCloseInventory;
 
+    public static Action OnScore;
+    public static Action<float> UpdateModifier;
 }

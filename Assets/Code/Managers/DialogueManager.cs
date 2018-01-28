@@ -39,6 +39,7 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(animTime);
             for (int j = 0; j < dialogueData[i].dialogues.Count; j++)
             {
+                SoundManager.Instance.PlayDialogueOpen();
                 textBoxParent.DOScale(Vector3.one, animTime);
                 yield return new WaitForSeconds(animTime);
 
@@ -58,6 +59,8 @@ public class DialogueManager : MonoBehaviour
             DialogueParent.DOScale(Vector3.zero, animTime);
             yield return new WaitForSeconds(animTime);
         }
+
+        LevelManager.Instance.StartFighting();
     }
 
     void WaitForNextDialogue(INPUT input)

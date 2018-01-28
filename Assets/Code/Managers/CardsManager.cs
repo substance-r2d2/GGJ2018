@@ -16,21 +16,12 @@ public class CardsManager : MonoBehaviour
     {
         ActionManager.OnCardGained += OnCardGained;
         ActionManager.OnCardDeployed += OnCardDeployed;
-
-        for (int i = 0; i < cards.Count; i++)
-        {
-            if (ActionManager.OnCardGained != null)
-                ActionManager.OnCardGained(cards[i], true);
-
-            if (ActionManager.OnCardGained != null)
-                ActionManager.OnCardGained(cards[i], true);
-        }
     }
 
     private void OnDisable()
     {
         ActionManager.OnCardGained -= OnCardGained;
-        ActionManager.OnCardDeployed += OnCardDeployed;
+        ActionManager.OnCardDeployed -= OnCardDeployed;
     }
 
     private void Awake()
@@ -46,10 +37,10 @@ public class CardsManager : MonoBehaviour
         {
             if (card.isAutoTrigger)
             {
-               /* if(ActionManager.OnCardDeployed != null)
+                if(ActionManager.OnCardDeployed != null)
                 {
                     ActionManager.OnCardDeployed(card, isPlayer);
-                }*/
+                }
             }
             else
             {
@@ -69,7 +60,8 @@ public class CardsManager : MonoBehaviour
         if(isPlayer)
         {
             CardsOwned cardOwned = playerOwnedCards.Find(x => x.card == card);
-            cardOwned.UpdateCardCount(-1);
+            if(cardOwned != null)
+                cardOwned.UpdateCardCount(-1);
         }
     }
 
@@ -88,6 +80,7 @@ public class CardData
     public CARD_TYPE cardType;
     public float modifier;
     public bool isAutoTrigger;
+    public string description;
 }
 
 public class CardsOwned

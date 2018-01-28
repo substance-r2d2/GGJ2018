@@ -106,6 +106,9 @@ public class MorceCodeBlock : MonoBehaviour
             {
                 //Debug.LogError("HIT!");
                 transform.DOShakeScale(1f);
+
+                if (ActionManager.OnScore != null)
+                    ActionManager.OnScore();
             }
             else
             {
