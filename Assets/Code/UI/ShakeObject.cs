@@ -18,7 +18,9 @@ public class ShakeObject : MonoBehaviour
 
     void ShakeIt()
     {
-        transform.DOShakeScale(0.25f, 0.25f, 5);
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOScale(Vector3.one * 0.85f, 0.1f));
+        seq.Append(transform.DOScale(Vector3.one, 0.1f));
     }
 
 }
